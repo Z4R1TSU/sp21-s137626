@@ -130,7 +130,7 @@ public class Model extends Observable {
                     }
                 }
             }
-            // fill: to fill up the empty position with the remaining piles
+            // fill: to fill up the empty position with the remaining piles (2 conditions)
             for (int r = board.size() - 2; r >= 0; r -= 1) {
                 Tile t = board.tile(c, r);
                 if (t != null) {
