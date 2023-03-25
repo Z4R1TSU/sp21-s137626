@@ -139,7 +139,7 @@ public class Model extends Observable {
                             board.move(c, i - 1, t);
                             changed = true;
                         }
-                        else if (i == board.size() - 1 && r != board.size() - 2) {
+                        else if (i == board.size() - 1 && board.tile(c, i) == null) {
                             board.move(c, i, t);
                             changed = true;
                         }
