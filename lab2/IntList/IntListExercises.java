@@ -72,14 +72,14 @@ public class IntListExercises {
         }
 
         IntList p = lst;
-        boolean hasPrimeShown = false;
+        boolean hasPrimeBefore = false;
         while (p != null) {
             if (Primes.isPrime(p.first)) {
-                hasPrimeShown =true;
+                hasPrimeBefore =true;
                 p.first *= p.first;
             }
             p = p.rest;
         }
-        return hasPrimeShown;
+        return hasPrimeBefore;
     }
 }
