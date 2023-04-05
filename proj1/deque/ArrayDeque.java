@@ -16,7 +16,7 @@ public class ArrayDeque<T> implements Deque<T>, Iterable<T> {
         this.value = (T[]) new Object[this.size];
     }
 
-    public void reSize(int num) {
+    private void reSize(int num) {
         T[] newArray = (T[]) new Object[num];
         for (int i = 0; i < this.length; i += 1) {
             newArray[i] = this.value[(head + i) % this.size];
@@ -54,13 +54,8 @@ public class ArrayDeque<T> implements Deque<T>, Iterable<T> {
     }
 
     @Override
-    public boolean isEmpty() {
-        return this.length == 0;
-    }
-
-    @Override
     public int size() {
-        return this.size;
+        return this.length;
     }
 
     @Override
