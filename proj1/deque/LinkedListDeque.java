@@ -98,10 +98,8 @@ public class LinkedListDeque<T> implements Deque<T>, Iterable<T> {
         return helperGetRecur(sentinelHead, index);
     }
     private T helperGetRecur(LinkedList p, int idx) {
-        if (p == sentinelTail) {
+        if (idx != 0 && p == sentinelTail) {
             return null;
-        } else if (p == sentinelHead && idx == 0) {
-            return p.next.value;
         } else if (idx == 0) {
             return p.value;
         } else {

@@ -115,29 +115,21 @@ public class ArrayDeque<T> implements Deque<T>, Iterable<T> {
     }
 
     private class LinkedListIterator implements Iterator<T> {
-        private int first;
+        private int cnt;
         LinkedListIterator() {
-            this.first = head;
+            this.cnt = 0;
         }
         public boolean hasNext() {
-            return this.first != tail;
+            return this.cnt < length;
         }
         public T next() {
-            int temp = this.first;
-            this.first += 1;
+            int temp = this.cnt;
+            this.cnt += 1;
             return get(temp);
         }
     }
 
     public Iterator<T> iterator() {
-        return new ArrayDeque.LinkedListIterator();
-    }
-
-    public static void main(String[] arg) {
-        ArrayDeque<Integer> test = new ArrayDeque<>();
-        test.addFirst(0);
-        System.out.println(test.removeLast());
-        test.addFirst(2);
-        System.out.println(test.removeLast());
+        return new LinkedListIterator();
     }
 }
