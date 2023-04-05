@@ -21,12 +21,10 @@ public class ArrayDeque<T> implements Deque<T>, Iterable<T> {
         for (int i = 0; i < this.length; i += 1) {
             newArray[i] = this.value[(head + i) % this.size];
         }
-        if (!this.isEmpty()) {
-            this.head = 0;
-            this.tail = this.length - 1;
-            this.size = num;
-            this.value = newArray;
-        }
+        this.head = 0;
+        this.tail = Math.max(this.length - 1, 0);
+        this.size = num;
+        this.value = newArray;
     }
 
     @Override
@@ -133,5 +131,13 @@ public class ArrayDeque<T> implements Deque<T>, Iterable<T> {
 
     public Iterator<T> iterator() {
         return new ArrayDeque.LinkedListIterator();
+    }
+
+    public static void main(String[] arg) {
+        ArrayDeque<Integer> test = new ArrayDeque<>();
+        test.addFirst(0);
+        System.out.println(test.removeLast());
+        test.addFirst(2);
+        System.out.println(test.removeLast());
     }
 }

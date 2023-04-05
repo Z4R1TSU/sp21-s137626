@@ -6,7 +6,7 @@ public class LinkedListDeque<T> implements Deque<T>, Iterable<T> {
         private final T value;
         private LinkedList next;
         private LinkedList prev;
-        public  LinkedList(LinkedList p, T i, LinkedList n) {
+        LinkedList(LinkedList p, T i, LinkedList n) {
             this.prev = p;
             this.value = i;
             this.next = n;
@@ -98,7 +98,7 @@ public class LinkedListDeque<T> implements Deque<T>, Iterable<T> {
         return helperGetRecur(sentinelHead, index);
     }
     private T helperGetRecur(LinkedList p, int idx) {
-        if (this.isEmpty()) {
+        if (p == sentinelTail) {
             return null;
         } else if (p == sentinelHead && idx == 0) {
             return p.next.value;
