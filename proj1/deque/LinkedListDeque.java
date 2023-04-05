@@ -95,7 +95,7 @@ public class LinkedListDeque<T> implements Deque<T>, Iterable<T> {
     }
 
     public T getRecursive(int index) {
-        return helperGetRecur(sentinelHead, index);
+        return helperGetRecur(sentinelHead.next, index);
     }
     private T helperGetRecur(LinkedList p, int idx) {
         if (idx != 0 && p == sentinelTail) {
