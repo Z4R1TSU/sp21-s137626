@@ -12,8 +12,7 @@ public class DebugExercise2 {
            step out button because you're not going to learn anything. */
         int z = ~(b - a) >> 31;
 
-        int max = b & w | a & z;
-        return max;
+        return b & w | a & z;
     }
 
 
@@ -55,11 +54,9 @@ public class DebugExercise2 {
 
     /** Returns the sum of all elements in x. */
     public static int arraySum(int[] x) {
-        int i = 0;
         int sum = 0;
-        while (i < x.length) {
-            sum = sum + add(sum, x[i]);
-            i = i + 1;
+        for (int i: x) {
+            sum += i;
         }
         return sum;
     }
