@@ -31,6 +31,22 @@ public class BSTMap<K extends Comparable<K>, V> implements Map61B<K, V> {
             }
         }
 
+        // alternative solution of get (preferred)
+        public BSTNode<K, V> get(K k) {
+            if (k == null) {
+                return null;
+            }
+            if (k.equals(this.key)) {
+                return this;
+            } else if (this.isLeaf()) {
+                return null;
+            } else if (k.compareTo(this.key) < 0) {
+                return this.left.get(k);
+            } else {
+                return this.right.get(k);
+            }
+        }
+
         public void insertNode(BSTNode<K, V> b, K k, V v) {
             if (b == null) {
                 b = new BSTNode<>(k, v);
@@ -47,6 +63,27 @@ public class BSTMap<K extends Comparable<K>, V> implements Map61B<K, V> {
                     insertNode(b.right, k, v);
                 }
             }
+        }
+
+        // alternative solution of put (preferred)
+        public void put(K k, V v) {
+            if (k.compareTo(this.key) < 0) {
+                if (this.left == null) {
+                    this.left = new BSTNode<>(k, v);
+                    return;
+                }
+                this.left.put(k, v);
+            } else {
+                if (this.right == null) {
+                    this.right = new BSTNode<>(k, v);
+                    return;
+                }
+                this.right.put(k, v);
+            }
+        }
+
+        public boolean isLeaf() {
+            return this.left == null && this.right == null;
         }
     }
 
@@ -74,10 +111,10 @@ public class BSTMap<K extends Comparable<K>, V> implements Map61B<K, V> {
 
     @Override
     public V get(K key) {
-        if (this.root == null || root.getNode(this.root, key) == null) {
+        if (this.root == null || root.get(key) == null) {
             return null;
         }
-        return root.getNode(this.root, key).value;
+        return root.get(key).value;
     }
 
     @Override
@@ -91,7 +128,7 @@ public class BSTMap<K extends Comparable<K>, V> implements Map61B<K, V> {
         if (this.root == null) {
             root = new BSTNode<>(key, value);
         } else {
-            root.insertNode(this.root, key, value);
+            root.put(key, value);
         }
     }
 
