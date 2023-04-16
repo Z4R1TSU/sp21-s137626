@@ -1,7 +1,6 @@
 package bstmap;
 
-import java.util.Iterator;
-import java.util.Set;
+import java.util.*;
 
 public class BSTMap<K extends Comparable<K>, V> implements Map61B<K, V> {
 
@@ -17,6 +16,16 @@ public class BSTMap<K extends Comparable<K>, V> implements Map61B<K, V> {
             this.value = v;
             this.left = null;
             this.right = null;
+        }
+
+        public BSTNode<K, V> findParent(BSTNode<K, V> target) {
+            if (this.left == target || this.right == target) {
+                return this;
+            } else if (this.key.compareTo(target.key) < 0) {
+                return this.right.findParent(target);
+            } else {
+                return this.left.findParent(target);
+            }
         }
 
         public BSTNode<K, V> getNode(BSTNode<K, V> b, K k) {
@@ -85,6 +94,27 @@ public class BSTMap<K extends Comparable<K>, V> implements Map61B<K, V> {
         public boolean isLeaf() {
             return this.left == null && this.right == null;
         }
+
+        // preorder traversal of the whole BSTMap, return a list of BSTNode
+        public List<BSTNode<K, V>> traverse() {
+            List<BSTNode<K, V>> ans = new ArrayList<>();
+            if (this.left != null) {
+                ans.addAll(this.left.traverse());
+            }
+            ans.add(this);
+            if (this.right != null) {
+                ans.addAll(this.right.traverse());
+            }
+            return ans;
+        }
+
+        public BSTNode<K, V> findRightMost() {
+            if (this.right == null) {
+                return this;
+            } else {
+                return this.right.findRightMost();
+            }
+        }
     }
 
     private int size;
@@ -132,23 +162,65 @@ public class BSTMap<K extends Comparable<K>, V> implements Map61B<K, V> {
         }
     }
 
+    public String printInOrder() {
+        return this.root.traverse().toString();
+    }
+
     @Override
     public Set<K> keySet() {
-        throw new UnsupportedOperationException();
+        if (this.root == null) {
+            return null;
+        }
+        Set<K> ans = new HashSet<>();
+        for (BSTNode<K, V> i : this.root.traverse()) {
+            ans.add(i.key);
+        }
+        return ans;
     }
 
     @Override
     public V remove(K key) {
-        throw new UnsupportedOperationException();
+        for (BSTNode<K, V> i : this.root.traverse()) {
+            if (i.key == key) {
+                V tmpValue = i.value;
+                if (i == root) {
+                    if (i.left != null) {
+                        BSTNode<K, V> l = i.left, r = i.right;
+                        root = i.findRightMost();
+                        root.left = l;
+                        root.right = r;
+                    } else {
+                        root = i.right;
+                    }
+                } else if (i.isLeaf()) {
+                    BSTNode<K, V> p = root.findParent(i);
+                    if (p.left == i) {
+                        p.left = null;
+                    } else {
+                        p.right = null;
+                    }
+                } else {
+                    BSTNode<K, V> p = root.findParent(i);
+                    if (p.left == i) {
+                        p.left = i.findRightMost();
+                    } else {
+                        p.right = i.findRightMost();
+                    }
+                }
+                this.size -= 1;
+                return tmpValue;
+            }
+        }
+        return null;
     }
 
     @Override
     public V remove(K key, V value) {
-        throw new UnsupportedOperationException();
+        return this.remove(key);
     }
 
     @Override
     public Iterator<K> iterator() {
-        throw new UnsupportedOperationException();
+        return this.keySet().iterator();
     }
 }
