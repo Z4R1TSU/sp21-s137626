@@ -182,7 +182,7 @@ public class MyHashMap<K, V> implements Map61B<K, V> {
         return ans;
     }
 
-    public void reSize(int s) {
+    private void reSize(int s) {
         Collection<Node>[] newBuckets = createTable(s);
         if (this.size >= 0) System.arraycopy(this.buckets, 0, newBuckets, 0, this.size);
         this.buckets = newBuckets;
